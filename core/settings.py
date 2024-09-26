@@ -1,25 +1,16 @@
-from environs import Env
-from dataclasses import dataclass
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-@dataclass
-class Bots:
-    bot_token: str
-
-@dataclass
-class Settings:
-    bot: Bots
-
-
-def get_settings(path: str):
-    env = Env()
-    env.read_env(path)
-
-    return Settings(
-        bot=Bots(
-            bot_token=env.str("TOKEN")
-        )
+class Settings(BaseSettings):
+    model_config = SettingsConfigDict(
+        frozen=True, case_sensitive=False,
+        extra="allow",
+        env_prefix="",
+        env_file_encoding="utf-8",
+        env_file=".env",
     )
 
+    TOKEN: str
 
-settings = get_settings('input')
+
+settings = Settings()
