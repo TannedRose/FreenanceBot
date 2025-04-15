@@ -5,7 +5,6 @@ import logging
 
 from aiogram.client.default import DefaultBotProperties
 
-from core.database.models import async_main
 from core.settings import settings
 from core.handlers.all import router
 
@@ -22,7 +21,6 @@ async def start():
 
     dp.include_router(router)
 
-    await async_main()
     try:
         await dp.start_polling(bot)
     finally:
